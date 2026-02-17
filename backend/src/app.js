@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import helmet from 'helmet';
 import cors from 'cors';
 import { testConnection } from './config/db.js';
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 dotenv.config();
 
@@ -22,6 +24,10 @@ app.use(express.json());
 app.get('/api/test', (req, res) => {
   res.json({ message: 'Le serveur fonctionne !' });
 });
+
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+
 
 (async () => {
   await testConnection();

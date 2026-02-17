@@ -1,0 +1,90 @@
+### Inscription d’un nouvel utilisateur valide
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "testUser",
+  "password": "Motdepasse1!"
+}
+
+###
+
+### Inscription avec mot de passe invalide
+### trop court, pas de majuscule, pas de chiffre, pas de caractère spécial
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "testUser2",
+  "password": "abc"
+
+}
+
+### Inscription avec username déjà pris
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "testUser",
+  "password": "Motdepasse1!"
+}
+
+###
+
+### Connexion de l’utilisateur valide
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "testUser",
+  "password": "Motdepasse1!"
+}
+
+###
+
+### Connexion avec mot de passe incorrect
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "testUser",
+  "password": "Mauvais1!"
+}
+
+###
+
+### Dashboard (requête protégée) avec token valide
+GET http://localhost:5000/api/users/dashboard
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0VXNlciIsImlhdCI6MTc3MTM0MTI4MiwiZXhwIjoxNzcxMzQ0ODgyfQ.BObwVhDIIT-HH_rzrZqqgUlIFC4AvW9vgNc5M7A6nKQ
+
+###
+
+###
+
+### Dashboard sans token
+GET http://localhost:5000/api/users/dashboard
+
+###
+
+### Dashboard avec token invalide
+GET http://localhost:5000/api/users/dashboard
+Authorization: Bearer INVALIDTOKEN
+
+###
+
+### Logout (requête protégée) avec token valide
+POST http://localhost:5000/api/users/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0VXNlciIsImlhdCI6MTc3MTM0MTI4MiwiZXhwIjoxNzcxMzQ0ODgyfQ.BObwVhDIIT-HH_rzrZqqgUlIFC4AvW9vgNc5M7A6nKQ
+
+###
+
+### Logout sans token
+POST http://localhost:5000/api/users/logout
+
+###
+
+### Logout avec token invalide
+POST http://localhost:5000/api/users/logout
+Authorization: Bearer INVALIDTOKEN
+
+###

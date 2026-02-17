@@ -6,6 +6,7 @@ Commande effectuées pour installer les différentes dépendances utilisées dur
 
 npm init -y
 npm install express mysql2 dotenv bcrypt cors csurf helmet
+npm install jsonwebtoken
 npm install --save-dev jest
 
 Commande à exécuter pour démarrer le serveur :
