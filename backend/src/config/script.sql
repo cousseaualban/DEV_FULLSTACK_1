@@ -1,4 +1,3 @@
--- Sélection de la base
 USE dev_fullstack_1;
 
 -- Table Utilisateur
@@ -16,7 +15,7 @@ CREATE TABLE IF NOT EXISTS products (
     description TEXT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     category VARCHAR(50) NOT NULL,
-    images JSON,
+    images TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
