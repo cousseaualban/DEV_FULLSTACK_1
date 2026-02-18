@@ -1,6 +1,7 @@
 A faire à la récupération du projet :
 
 npm install
+Créer une base de données MySQL => dev_fullstack_1
 
 Commande effectuées pour installer les différentes dépendances utilisées durant le projet :
 
