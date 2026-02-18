@@ -14,3 +14,11 @@ export const getAllProduct = async () => {
   );
   return rows;
 };
+
+export const getProductById = async (id) => {
+  const [rows] = await pool.execute(
+    'SELECT * FROM products WHERE id = ?',
+    [id]
+  );
+  return rows[0];
+};

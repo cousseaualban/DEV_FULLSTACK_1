@@ -102,3 +102,6 @@ Content-Type: application/json
 
 ### get all product
 GET http://localhost:5000/api/product
+
+### get One product
+GET http://localhost:5000/api/product/1
