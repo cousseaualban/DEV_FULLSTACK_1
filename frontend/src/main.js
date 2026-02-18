@@ -38,14 +38,20 @@ const articles = [
   }
 ];
 
-function voirDetail(articleId) {
-  console.log("Affichage des détails pour l'article :", articleId);
+function voirDetail(id) {
+  const article = articles.find((a => a.id = id))
+  return `
+    <div class="text-2xl font-bold">${article.libelle}</div>
+    <div >${article.description}</div>
+    <div>Prix: ${article.prix} €</div>
+    <div>Catégorie: ${article.categorie}</div>
+  `
 }
 
 function listeArticles () {
   return `
-    <div class="flex justify-center text-4xl font-bold">Liste des articles</div>
-    <div class="grid grid-cols-6 gap-4 p-3">
+    <div class="flex justify-center text-4xl font-bold mb-3">Liste des articles</div>
+    <div class="grid grid-cols-6 gap-4">
       ${articles.map(article => cardArticles(article)).join("")}
     <div>`
 }
@@ -69,11 +75,7 @@ router
     document.getElementById("app").innerHTML = listeArticles()
   })
   .on("/article/:id", ({ data }) => {
-    const id = data.id;
-
-    document.getElementById("app").innerHTML = `
-      <h1>Article ${id}</h1>
-    `;
+    document.getElementById("app").innerHTML = voirDetail(data.id);
   })
   .resolve()
 
