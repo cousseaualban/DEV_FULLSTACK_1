@@ -1,3 +1,5 @@
+import Navigo from "navigo";
+
 const articles = [
   {
     id: 1,
@@ -41,41 +43,38 @@ function voirDetail(articleId) {
 }
 
 function listeArticles () {
-  const html = `
-    <p class="flex justify-center text-4xl font-bold">Liste des articles</p>
-    <table class="border-collapse w-full bg-white">
-      <thead>
-        <tr>
-          <th class="border border-black">ID</th>
-          <th class="border border-black">Libelle</th>
-          <th class="border border-black">Prix</th>
-          <th class="border border-black">Catégorie</th>
-          <th class="border border-black">Actions</th>
-        </tr>
-      </thead>
-      <tbody id="articlesList">
-      ${articles.map(article => `<tr>
-            <td class="border border-black p-1">${article.id}</td>
-            <td class="border border-black p-1">${article.libelle}</td>
-            <td class="border border-black p-1">${article.categorie}</td>
-            <td class="border border-black p-1">${article.prix}</td>
-            <td class="border border-black p-1">
-              <button class="btn-detail" data-id="${article.id}">Détail</button>
-            </td>
-          </tr>
-          `)
-        .join("")}
-      </tbody>
-    </table>`
-  document.querySelector('#app').innerHTML = html
+  return `
+    <div class="flex justify-center text-4xl font-bold">Liste des articles</div>
+    <div class="grid grid-cols-6 gap-4 p-3">
+      ${articles.map(article => cardArticles(article)).join("")}
+    <div>`
+}
 
-  document
-    .querySelectorAll('.btn-detail')
-    .forEach(button => {
-        button.addEventListener('click', () => {
-          voirDetail(button.getAttribute('data-id'));
-        });
-      })
+function cardArticles (article) {
+  return `
+    <a href="/article/${article.id}" class="bg-white border rounded-lg p-2">
+      <div class="flex justify-center text-lg font-bold">${article.libelle}</div>
+      <div>Prix: ${article.prix} €</div>
+      <div>Catégorie: ${article.categorie}</div>
+    </a>
+  `
 }
 
 listeArticles()
+
+const router = new Navigo("/");
+
+router
+  .on("/", () => {
+    document.getElementById("app").innerHTML = listeArticles()
+  })
+  .on("/article/:id", ({ data }) => {
+    const id = data.id;
+
+    document.getElementById("app").innerHTML = `
+      <h1>Article ${id}</h1>
+    `;
+  })
+  .resolve()
+
+
