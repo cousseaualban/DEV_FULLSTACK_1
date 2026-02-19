@@ -88,3 +88,20 @@ POST http://localhost:5000/api/users/logout
 Authorization: Bearer INVALIDTOKEN
 
 ###
+
+### Add product
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+  "label": "Pommes Gala",
+  "description": "Des pommes Gala fraîches, sucrées et juteuses, parfaites pour les collations.",
+  "price": 2.5,
+  "category": "Fruits"
+}
+
+### get all product
+GET http://localhost:5000/api/product
+
+### get One product
+GET http://localhost:5000/api/product/1
