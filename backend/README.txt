@@ -7,7 +7,7 @@ Copier-coller script.sql pour créer les tables dans la bdd une fois créée
 Commande effectuées pour installer les différentes dépendances utilisées durant le projet :
 
 npm init -y
-npm install express mysql2 dotenv bcrypt cors csurf helmet
+npm install express mysql2 dotenv bcrypt cors helmet
 npm install jsonwebtoken
 
 /* Tests unitaires */
