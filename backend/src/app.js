@@ -7,7 +7,8 @@ import cors from 'cors';
 import { testConnection } from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-import statsRoutes from "./routes/statsRoutes.js";
+import statsRoutes from './routes/statsRoutes.js';
+import productRoutes from'./routes/productRoutes.js';
 
 dotenv.config();
 
@@ -37,6 +38,7 @@ app.get('/api/test', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/product', productRoutes);
 
 app.use("/api/stats", statsRoutes);
 
