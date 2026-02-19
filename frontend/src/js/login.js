@@ -23,9 +23,8 @@ form.addEventListener("submit", async (e) => {
 
       localStorage.setItem("token", data.token);
 
-      setTimeout(() => {
-        window.location.href = "http://localhost:3000";
-      }, 500);
+      window.location.href = "/src/html/dashboard.html";
+
     } else {
       message.classList.remove("text-green-500");
       message.classList.add("text-red-500");

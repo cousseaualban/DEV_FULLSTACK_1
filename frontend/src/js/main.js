@@ -1,5 +1,5 @@
 import Navigo from "navigo";
-import { initAddProductForm } from './add-product.js';
+import { initAddProductForm } from '../js/add-product.js';
 
 function voirDetail(article) {
   return `
@@ -20,41 +20,54 @@ function listeArticles (articles) {
   
 }
 
-function cardArticles (article) {
+function cardArticles(article) {
   return `
-    <a href="/article/${article.id}" class="bg-white border rounded-lg p-2">
+    <div class="bg-white border rounded-lg p-2 cursor-pointer" onclick="showArticle(${article.id})">
       <div class="flex justify-center text-lg font-bold">${article.label}</div>
       <div>Prix: ${article.price} €</div>
       <div>Catégorie: ${article.category}</div>
-    </a>
-  `
+    </div>
+  `;
 }
 
-async function loadPage(url) {
-  const res = await fetch(url);
-  const html = await res.text();
-  document.getElementById('app').innerHTML = html;
-
-  if (url.endsWith('add-product.html')) {
-    initAddProductForm();
+window.showArticle = async function(id) {
+  try {
+    const res = await fetch(`http://localhost:5000/api/product/${id}`);
+    const article = await res.json();
+    openModal(article);
+  } catch (err) {
+    console.error("Impossible de charger l'article", err);
   }
 }
-const router = new Navigo("/");
 
-router
-  .on("/", () => {
-    fetch('http://localhost:5000/api/product')
-      .then(r => r.json())
-      .then(articles => {
-        document.getElementById("app").innerHTML = listeArticles(articles)
-      });
-  })
-  .on("/article/:id", ({ data }) => {
-    fetch(`http://localhost:5000/api/product/${data.id}`)
-      .then(r => r.json())
-      .then(article => {
-        document.getElementById("app").innerHTML = voirDetail(article)
-      });
-  })
-  .on("/add-product", () => loadPage('./src/html/add-product.html'))
-  .resolve()
+
+// Charger les produits au chargement de la page
+fetch('http://localhost:5000/api/product')
+  .then(r => r.json())
+  .then(articles => {
+    document.getElementById("app").innerHTML = listeArticles(articles);
+  });
+
+  
+function openModal(article) {
+  const modal = document.getElementById("modal");
+  const modalBody = document.getElementById("modalBody");
+  const app = document.getElementById("app");
+
+  modalBody.innerHTML = voirDetail(article);
+  modal.classList.remove("hidden");
+  app.classList.add("blur");
+}
+
+function closeModal() {
+  const modal = document.getElementById("modal");
+  const app = document.getElementById("app");
+
+  modal.classList.add("hidden");
+  app.classList.remove("blur");
+}
+
+document.getElementById("closeModal").addEventListener("click", closeModal);
+
+document.getElementById("modalOverlay").addEventListener("click", closeModal);
+
