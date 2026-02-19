@@ -18,6 +18,11 @@ npm install --save-dev babel-jest @babel/preset-env
 /* Tests End-To-End */
 npm install --save-dev supertest
 
+/* FRONT */
+
+npm install vite-plugin-html
+
+
 Commande à exécuter pour démarrer le serveur backend :
 
 node src/server.js

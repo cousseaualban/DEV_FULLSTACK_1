@@ -4,6 +4,7 @@
   "type": "module",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "directories": {
     "test": "tests"
   },
@@ -16,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "csurf": "^1.11.0",
     "dotenv": "^17.3.1",
