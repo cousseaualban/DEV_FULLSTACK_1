@@ -1,4 +1,5 @@
 import Navigo from "navigo";
+import { initAddProductForm } from './js/add-product.js';
 
 function voirDetail(article) {
   return `
@@ -29,6 +30,15 @@ function cardArticles (article) {
   `
 }
 
+async function loadPage(url) {
+  const res = await fetch(url);
+  const html = await res.text();
+  document.getElementById('app').innerHTML = html;
+
+  if (url.endsWith('add-product.html')) {
+    initAddProductForm();
+  }
+}
 const router = new Navigo("/");
 
 router
@@ -46,4 +56,5 @@ router
         document.getElementById("app").innerHTML = voirDetail(article)
       });
   })
+  .on("/add-product", () => loadPage('./src/html/add-product.html'))
   .resolve()
