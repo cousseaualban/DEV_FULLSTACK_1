@@ -1,4 +1,5 @@
 import Navigo from "navigo";
+import { initAddProductForm } from './js/add-product.js';
 
 const articles = [
   {
@@ -38,8 +39,16 @@ const articles = [
   }
 ];
 
-function voirDetail(articleId) {
-  console.log("Affichage des détails pour l'article :", articleId);
+
+
+function voirDetail(id) {
+  const article = articles.find((a => a.id = id))
+  return `
+    <div class="text-2xl font-bold">${article.libelle}</div>
+    <div >${article.description}</div>
+    <div>Prix: ${article.prix} €</div>
+    <div>Catégorie: ${article.categorie}</div>
+  `
 }
 
 function listeArticles () {
@@ -60,6 +69,16 @@ function cardArticles (article) {
   `
 }
 
+async function loadPage(url) {
+  const res = await fetch(url);
+  const html = await res.text();
+  document.getElementById('app').innerHTML = html;
+
+  if (url.endsWith('add-product.html')) {
+    initAddProductForm();
+  }
+}
+
 listeArticles()
 
 const router = new Navigo("/");
@@ -75,6 +94,7 @@ router
       <h1>Article ${id}</h1>
     `;
   })
+  .on("/add-product", () => loadPage('./src/html/add-product.html'))
   .resolve()
 
 
