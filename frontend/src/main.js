@@ -2,6 +2,7 @@ import Navigo from "navigo";
 import { pageListeArticles } from "./page/pageListeArticles";
 import { pagePanier } from "./page/pagePanier";
 import { login } from "./page/login";
+import { loadCSPPage } from "./page/csp.js";
 
 const router = new Navigo("/");
 
@@ -18,6 +19,10 @@ router
   .on("/panier", () => {
     pagePanier()
   })
+  .on("/admin/csp-reports", () => {
+    loadCSPPage()
+  })
+
   .resolve()
 
 

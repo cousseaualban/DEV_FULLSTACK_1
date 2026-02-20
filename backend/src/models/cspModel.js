@@ -22,19 +22,16 @@ export async function saveCSPReport(report) {
   ]);
 }
 
-/**
- * Récupère les dernières violations CSP
- * @param {number} limit - nombre maximum de reports à récupérer
- */
-export async function getCSPReports(limit = 50) {
-  const [rows] = await pool.execute(
-    `
-      SELECT id, document_uri, blocked_uri, violated_directive, original_policy, created_at
-      FROM csp_reports
-      ORDER BY created_at DESC
-      LIMIT ?
-    `,
-    [limit]
-  );
+export const getCSPReports = async (limit = 50) => {
+
+  const safeLimit = parseInt(limit, 10) || 50;
+
+  const [rows] = await pool.query(`
+    SELECT id, document_uri, blocked_uri, violated_directive, original_policy, created_at
+    FROM csp_reports
+    ORDER BY created_at DESC
+    LIMIT ${safeLimit}
+  `);
+
   return rows;
-}
+};
