@@ -1,4 +1,4 @@
-import { closeModal, openModal } from "../main";
+import { closeModal, openModal, reloadConnexion } from "../main";
 import { register } from "./register";
 
 function loginForm() {
@@ -52,9 +52,9 @@ export function login() {
                 message.textContent = "Connexion réussie !";
 
                 localStorage.setItem("token", data.token);
-
+                reloadConnexion()
                 closeModal()
-
+                
             } else {
                 message.classList.remove("text-green-500");
                 message.classList.add("text-red-500");

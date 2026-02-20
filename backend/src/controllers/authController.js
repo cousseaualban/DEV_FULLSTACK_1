@@ -10,6 +10,13 @@ export const registerController = async (req, res) => {
   }
 };
 
+export const profileController = async (req, res) => {
+  res.status(200).json({
+    message: 'Token valide',
+    user: req.user
+  });
+}
+
 export const loginController = async (req, res) => {
   try {
     const { username, password } = req.body;

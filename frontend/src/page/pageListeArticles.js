@@ -1,7 +1,8 @@
-import { openModal, panier } from "../main";
+import { openModal, panier, verifyToken } from "../main";
 import { addProduct } from "./addProduct";
 
-function listeArticles (articles) {
+async function listeArticles (articles) {
+  const token = await verifyToken()
   return `
     <div class="flex justify-center text-4xl font-bold mb-3">Liste des articles</div>
     <form id="searchForm" class="mb-3 flex flex-row justify-between">
@@ -9,7 +10,7 @@ function listeArticles (articles) {
         <input type="text" id="searchInput" class="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
         <button type="submit" class="bg-violet-500 cursor-pointer text-white p-2 rounded hover:bg-violet-700">Rechercher</button>
       </div>
-      <button onclick="modalAddProduct()" class="bg-violet-500 cursor-pointer text-white p-2 rounded hover:bg-violet-700">Ajouter un produit</button>
+      <button onclick="modalAddProduct()" class="${token? '' : 'hidden'} bg-violet-500 cursor-pointer text-white p-2 rounded hover:bg-violet-700">Ajouter un produit</button>
     </form>
     <div class="grid grid-cols-8 gap-4" id="grid">
       ${articles.map(article => cardArticles(article)).join("")}
@@ -50,9 +51,10 @@ function voirDetail(article) {
 export function pageListeArticles () {
   fetch('http://localhost:5000/api/product')
     .then(r => r.json())
-    .then(articles => {
-      document.getElementById("app").innerHTML = listeArticles(articles)
-
+    .then(async articles => {
+      document.getElementById("app").innerHTML = await listeArticles(articles)
+    })
+    .then(() => {
       document.getElementById("searchForm")
         .addEventListener("submit", function (event) {
           event.preventDefault();
