@@ -44,9 +44,16 @@ export function initAddProductForm() {
         : `Erreur : ${data.error}`;
       alert(message);
 
-      if(res.ok) e.target.reset();
+
+      if (res.ok) {
+        e.target.reset();
+        window.location.href = '/dashboard';
+      }
     } catch(err) {
       alert(`Erreur : ${err.message}`);
     }
   });
+
 }
+
+initAddProductForm(); 
