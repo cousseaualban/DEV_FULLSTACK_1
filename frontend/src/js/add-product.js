@@ -1,4 +1,21 @@
 export function initAddProductForm() {
+  const form = document.getElementById('addProductForm');
+  if (!form) return;
+  const user = localStorage.getItem("user");
+  
+  if (!user) {
+    alert("Vous devez être connecté pour accéder à cette page");
+    window.location.href = "/login.html";
+    return; 
+  }
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Vous devez être connecté !");
+    window.location.href = "/login.html";
+    return;
+  }
+  
   async function getCsrfToken() {
     try {
       const res = await fetch('http://localhost:5000/api/csrf-token', {
@@ -32,7 +49,8 @@ export function initAddProductForm() {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
-          'CSRF-Token': csrfToken
+          'CSRF-Token': csrfToken,
+          'Authorization': token
          },
         credentials: 'include',
         body: JSON.stringify(productData)

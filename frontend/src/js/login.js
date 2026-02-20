@@ -23,6 +23,8 @@ form.addEventListener("submit", async (e) => {
 
       localStorage.setItem("token", data.token);
 
+      localStorage.setItem("user", JSON.stringify({ username }));
+
       window.location.href = "/src/html/dashboard.html";
 
     } else {
