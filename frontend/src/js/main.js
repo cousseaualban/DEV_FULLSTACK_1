@@ -1,6 +1,3 @@
-import Navigo from "navigo";
-import { initAddProductForm } from '../js/add-product.js';
-
 function voirDetail(article) {
   return `
     <div class="text-2xl font-bold">${article.label}</div>

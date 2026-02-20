@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" class="bg-gray-100">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - CSP Reports</title>
+  <link href="/src/css/style.css" rel="stylesheet">
+</head>
+<body class="min-h-screen p-6">
+
+  <div class="max-w-6xl mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-2xl font-bold mb-6 text-center">Dernières violations CSP</h1>
+
+    <table class="w-full table-auto border-collapse">
+      <thead>
+        <tr class="bg-gray-200 text-left">
+          <th class="p-2 border">Date</th>
+          <th class="p-2 border">Document URI</th>
+          <th class="p-2 border">Blocked URI</th>
+          <th class="p-2 border">Directive Violée</th>
+          <th class="p-2 border">Politique</th>
+        </tr>
+      </thead>
+      <tbody id="cspReports" class="divide-y divide-gray-200">
+      </tbody>
+    </table>
+
+    <p id="message" class="mt-4 text-red-500 text-center"></p>
+  </div>
+
+  <script type="module" src="/src/js/csp.js"></script>
+</body>
+</html>
