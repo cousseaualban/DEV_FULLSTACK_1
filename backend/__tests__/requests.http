@@ -101,7 +101,7 @@ Content-Type: application/json
 }
 
 ### get all product
-GET http://localhost:5000/api/product
+GET http://localhost:5000/api/product?search=
 
 ### get One product
 GET http://localhost:5000/api/product/1

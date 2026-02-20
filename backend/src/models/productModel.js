@@ -8,7 +8,15 @@ export const createProduct = async (product) => {
   return result.insertId;
 };
 
-export const getAllProduct = async () => {
+export const getAllProduct = async (search) => {
+  if (search) {
+    const [rows] = await pool.execute(
+      'SELECT * FROM products WHERE label LIKE ?',
+      [`%${search}%`]
+    );
+    return rows
+  }
+
   const [rows] = await pool.execute(
     'SELECT * FROM products'
   );
