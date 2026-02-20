@@ -19,3 +19,13 @@ CREATE TABLE IF NOT EXISTS products (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS csp_reports (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    document_uri VARCHAR(255) NOT NULL,
+    blocked_uri VARCHAR(255) NOT NULL,
+    violated_directive VARCHAR(255) NOT NULL,
+    original_policy TEXT NOT NULL,
+    disposition VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,4 +1,6 @@
 export const validatePassword = (password) => {
-  const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,12}$/;
+  if (typeof password !== 'string') return false;
+
+  const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,12}$/;
   return regex.test(password);
 };
