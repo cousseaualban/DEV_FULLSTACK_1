@@ -54,7 +54,15 @@ async function getCsrfToken() {
     }
 }
 
+function isLoggedIn() {
+    return !!localStorage.getItem('token'); 
+}
+
 export function addProduct () {
+    if (!isLoggedIn()) {
+        alert('Vous devez être connecté pour ajouter un produit !');
+        return; 
+    }
     openModal(modalAddProduct())
     document.getElementById('addProductForm')?.addEventListener('submit', async e => {
         e.preventDefault();
@@ -70,11 +78,14 @@ export function addProduct () {
 
         try {
         const csrfToken = await getCsrfToken();
+        const jwtToken = localStorage.getItem('token'); 
+
         const res = await fetch('http://localhost:5000/api/product', {
             method: 'POST',
             headers: { 
             'Content-Type': 'application/json',
-            'CSRF-Token': csrfToken
+            'CSRF-Token': csrfToken,
+            'Authorization': jwtToken 
             },
             credentials: 'include',
             body: JSON.stringify(productData)

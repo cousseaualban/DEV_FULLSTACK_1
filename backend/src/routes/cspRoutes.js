@@ -1,6 +1,6 @@
 import express from "express";
 import { saveCSPReport, getCSPReports } from "../models/cspModel.js";
-import { authenticateJWT } from "../middlewares/authMiddleware.js";
+import authMiddleware from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
@@ -26,7 +26,7 @@ router.post("/csp-report", async (req, res) => {
   }
 });
 
-router.get("/admin/csp-reports", authenticateJWT, async (req, res) => {
+router.get("/admin/csp-reports", authMiddleware, async (req, res) => {
   try {
     const reports = await getCSPReports(50);
     res.json(reports);
