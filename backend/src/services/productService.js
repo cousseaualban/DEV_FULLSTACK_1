@@ -9,9 +9,8 @@ export const addProduct = async (product) => {
   return productId;
 };
 
-export const getProducts = async () => {
-  const products = await getAllProduct();
-  return products;
+export const getProducts = async (search) => {
+  return await getAllProduct(search);
 };
 
 export const getProduct = async (id) => {

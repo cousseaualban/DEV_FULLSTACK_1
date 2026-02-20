@@ -12,7 +12,8 @@ export const addProductController = async (req, res) => {
 
 export const getProductsController = async (req, res) => {
   try {
-    const products = await getProducts();
+    const { search } = req.query
+    const products = await getProducts(search);
     res.status(201).json(products);
   } catch (error) {
     res.status(400).json({ error: error.message });
