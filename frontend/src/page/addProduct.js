@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ajouter un produit</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="../css/add-product.css">
-</head>
-<body class="bg-gray-100">
+import { closeModal, openModal } from "../main";
+import { listeReload } from "./pageListeArticles";
 
-  <div class="max-w-lg mx-auto mt-10 bg-white rounded-xl shadow-lg p-8">
-    <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Ajouter un produit</h1>
+function modalAddProduct() {
+    return `<h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Ajouter un produit</h1>
     <form id="addProductForm" class="space-y-4">
       <div>
         <label class="block mb-1 font-medium text-gray-700" for="label">Label</label>
@@ -43,9 +35,62 @@
             class="w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition shadow-md">
         Ajouter le produit
       </button>
-    </form>
+    </form>`
+}
+
+async function getCsrfToken() {
+    try {
+    const res = await fetch('http://localhost:5000/api/csrf-token', {
+        credentials: 'include' 
+    });
+    const text = await res.text();
     
-  </div>
-  <script type="module" src="/src/js/add-product.js"></script>
-</body>
-</html>
+    const data = JSON.parse(text);    
+    return data.csrfToken;
+    } catch (err) {
+    console.error('Erreur lors de la récupération du token CSRF:', err);
+    return null;
+    }
+}
+
+export function addProduct () {
+    openModal(modalAddProduct())
+    document.getElementById('addProductForm')?.addEventListener('submit', async e => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        
+        const productData = {
+        label: formData.get('label'),
+        description: formData.get('description'),
+        price: parseFloat(formData.get('price')),
+        category: formData.get('category'),
+        images: formData.getAll('images').map(file => file.name)
+        };
+
+        try {
+        const csrfToken = await getCsrfToken();
+        const res = await fetch('http://localhost:5000/api/product', {
+            method: 'POST',
+            headers: { 
+            'Content-Type': 'application/json',
+            'CSRF-Token': csrfToken
+            },
+            credentials: 'include',
+            body: JSON.stringify(productData)
+        });
+
+        const data = await res.json();
+        const message = res.ok 
+            ? 'Produit ajouté avec succès !' 
+            : `Erreur : ${data.error}`;
+
+        if (res.ok) {
+            e.target.reset();
+            listeReload(document.getElementById("searchInput").value)
+            closeModal()
+        }
+        } catch(err) {
+            alert(`Erreur : ${err.message}`);
+        }
+    });
+}

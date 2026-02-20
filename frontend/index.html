@@ -4,27 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/src/css/style.css" rel="stylesheet">
-    <title>Connexion</title>
+    <title>Articles</title>
   </head>
-  <body class="flex justify-center items-center h-screen">
-    <div class="bg-white p-8 rounded shadow-md w-96">
-      <h1 class="text-2xl font-bold mb-4 text-center">Se connecter</h1>
-      <form id="loginForm" class="flex flex-col gap-3">
-        <input type="text" id="username" placeholder="Nom d'utilisateur"
-               class="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <input type="password" id="password" placeholder="Mot de passe"
-               class="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <button type="submit"
-                class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
-          Se connecter
-        </button>
-      </form>
-      <p id="message" class="mt-2 text-red-500"></p>
-      <p class="mt-2 text-sm text-gray-600 text-center">
-        Pas encore de compte ? <a href="/src/html/register.html" class="text-blue-500 hover:underline">S'inscrire</a>
-      </p>
+  <body>
+    <div class="flex space-x-4 bg-violet-500 p-5 justify-between">
+        <div class="flex gap-2">
+            <a data-navigo href="/" class="p-3 rounded-lg bg-violet-600 text-white">Tableau de bord</a>
+            <a class="p-3 rounded-lg bg-violet-600 text-white" data-navigo href="/panier">Panier</a>
+        </div>
+        <button onclick="modalLogin()" class="p-3 rounded-lg bg-violet-600 text-white">Se connecter</button>
+    </div>
+    <div class="p-3" id="app"></div>
+    <div id="modal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+      <div id="modalOverlay" class="absolute inset-0 bg-black bg-opacity-40"></div>
+
+      <div id="modalContent" class="relative bg-white rounded-lg p-6 max-w-md w-full shadow-lg z-10">
+        <button id="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 font-bold text-xl">&times;</button>
+        <div id="modalBody"></div>
+      </div>
     </div>
 
-    <script type="module" src="/src/js/login.js"></script>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>

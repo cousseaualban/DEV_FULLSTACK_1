@@ -1,4 +1,4 @@
-import { panier } from "./main"
+import { panier } from "../main"
 
 function listePanier (articles) {
   return `
