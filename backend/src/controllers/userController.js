@@ -4,7 +4,3 @@ export const getDashboard = (req, res) => {
     user: req.user
   });
 };
-
-export const logoutUser = (req, res) => {
-  res.status(200).json({ message: 'Déconnexion réussie. Supprimez le token côté client.' });
-};

@@ -25,7 +25,7 @@ function cardArticles (article) {
         <div>Prix: ${article.price} €</div>
         <div>Catégorie: ${article.category}</div>
       </div>
-      <button class="bg-violet-500 w-full cursor-pointer text-white p-2 rounded hover:bg-violet-700" onclick="addPanier(${article.id})">Add</button>
+      <button class="bg-violet-500 w-full cursor-pointer text-white p-2 rounded hover:bg-violet-700" onclick="addPanier(${article.id})">Ajouter au panier</button>
     </div>
   `
 }

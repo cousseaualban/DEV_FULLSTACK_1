@@ -6,26 +6,24 @@ import { loadCSPPage } from "./page/csp.js";
 
 const router = new Navigo("/");
 
-export const panier = []
+export const panier = [];
 
-window.modalLogin = function() {
-  login()
-}
+window.modalLogin = function () {
+  login();
+};
 
 router
   .on("/", () => {
-    pageListeArticles()
+    pageListeArticles();
   })
   .on("/panier", () => {
-    pagePanier()
+    pagePanier();
   })
   .on("/admin/csp-reports", () => {
-    loadCSPPage()
+    loadCSPPage();
   })
 
-  .resolve()
-
-
+  .resolve();
 
 export function openModal(body) {
   const modal = document.getElementById("modal");
@@ -38,13 +36,35 @@ export function openModal(body) {
 }
 
 export function closeModal() {
-    const modal = document.getElementById("modal");
-    const app = document.getElementById("app");
+  const modal = document.getElementById("modal");
+  const app = document.getElementById("app");
 
-    modal.classList.add("hidden");
-    app.classList.remove("blur");
+  modal.classList.add("hidden");
+  app.classList.remove("blur");
+}
+
+document.getElementById("closeModal").addEventListener("click", closeModal);
+
+document.getElementById("modalOverlay").addEventListener("click", closeModal);
+
+window.logout = async function () {
+
+  const token = localStorage.getItem("token");
+
+  if (!token) return;
+
+  try {
+    await fetch("http://localhost:5000/api/auth/logout", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  } catch (err) {
+    console.error(err);
   }
 
-  document.getElementById("closeModal").addEventListener("click", closeModal);
+  localStorage.removeItem("token");
 
-  document.getElementById("modalOverlay").addEventListener("click", closeModal);
+  window.location.href = "/";
+}
