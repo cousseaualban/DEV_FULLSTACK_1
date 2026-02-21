@@ -11,6 +11,13 @@ export const registerController = async (req, res) => {
   }
 };
 
+export const profileController = async (req, res) => {
+  res.status(200).json({
+    message: 'Token valide',
+    user: req.user
+  });
+}
+
 export const loginController = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -29,3 +36,18 @@ export const loginController = async (req, res) => {
     res.status(401).json({ error: error.message });
   }
 };
+
+export const logoutController = async (req, res) => {
+  try {
+    return res.status(200).json({
+      message: "Déconnexion réussie. Supprimez le token côté client."
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      error: "Erreur lors de la déconnexion"
+    });
+  }
+};
+
+

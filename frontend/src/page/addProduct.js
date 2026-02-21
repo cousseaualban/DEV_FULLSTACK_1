@@ -54,15 +54,7 @@ async function getCsrfToken() {
     }
 }
 
-function isLoggedIn() {
-    return !!localStorage.getItem('token'); 
-}
-
 export function addProduct () {
-    if (!isLoggedIn()) {
-        alert('Vous devez être connecté pour ajouter un produit !');
-        return; 
-    }
     openModal(modalAddProduct())
     document.getElementById('addProductForm')?.addEventListener('submit', async e => {
         e.preventDefault();
@@ -85,7 +77,7 @@ export function addProduct () {
             headers: { 
             'Content-Type': 'application/json',
             'CSRF-Token': csrfToken,
-            'Authorization': jwtToken 
+            'Authorization': `Bearer ${jwtToken}`
             },
             credentials: 'include',
             body: JSON.stringify(productData)

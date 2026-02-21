@@ -1,15 +1,6 @@
 import { listeReload } from "./pageListeArticles";
 import { openModal, closeModal } from "../main";
 export function editProductModal(product) {
-
-  const token = localStorage.getItem("token");
-
-
-  if (!token) {
-    alert("Vous devez être connecté pour modifier un produit !");
-    return;
-  }
-
   const modalHTML = `
     <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">
       Modifier le produit
@@ -69,6 +60,7 @@ export function editProductModal(product) {
     e.preventDefault();
 
     try {
+      const token = localStorage.getItem("token");
       const updatedProduct = {
         label: document.getElementById("editLabel").value,
         description: document.getElementById("editDescription").value,
@@ -80,7 +72,7 @@ export function editProductModal(product) {
         method: "PUT", 
         headers: {
           "Content-Type": "application/json",
-          "Authorization": token
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(updatedProduct)
       });
@@ -88,15 +80,9 @@ export function editProductModal(product) {
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.error || "Erreur modification");
-
-      alert("Produit modifié avec succès ✅");
-
+       
+      listeReload(document.getElementById("searchInput").value)
       closeModal();
-
-    
-      const searchInput = document.getElementById("searchInput");
-      const search = searchInput ? searchInput.value : "";
-      listeReload(search);
 
     } catch (err) {
       alert(`Erreur : ${err.message}`);

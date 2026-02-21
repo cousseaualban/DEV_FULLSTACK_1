@@ -11,11 +11,11 @@ function listePanier (articles) {
 
 function cardArticles (article) {
   return `
-    <a data-navigo href="/article/${article.id}" class="bg-white border rounded-lg p-2">
+    <div onclick="showArticle(${article.id})" class="bg-white border rounded-lg p-2">
       <div class="flex justify-center text-lg font-bold">${article.label}</div>
       <div>Prix: ${article.price} €</div>
       <div>Catégorie: ${article.category}</div>
-    </a>
+    </div>
   `
 }
 

@@ -1,13 +1,9 @@
 
 import { openModal, closeModal } from "../main";
+import { listeReload } from "./pageListeArticles";
 export function deleteProductModal(productId, productLabel) {
-   const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-  
-  if (!token) {
-    alert("Vous devez être connecté pour supprimer un produit !");
-    return;
-  }
   const modalHTML = `
     <h2 class="text-xl font-bold mb-4">Supprimer le produit</h2>
     <p>Voulez-vous vraiment supprimer <strong>${productLabel}</strong> ?</p>
@@ -28,7 +24,7 @@ export function deleteProductModal(productId, productLabel) {
       const res = await fetch(`http://localhost:5000/api/product/${productId}`, {
         method: "DELETE",
         headers: {
-          "Authorization": token,
+          "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json"
         }
       });
@@ -36,10 +32,8 @@ export function deleteProductModal(productId, productLabel) {
       const data = res.ok ? await res.json() : { error: res.statusText };
       if (!res.ok) throw new Error(data.error || "Impossible de supprimer le produit");
 
-      alert(data.message || "Produit supprimé !");
+      listeReload(document.getElementById("searchInput").value)
       closeModal();
-
-      document.getElementById(`product-${productId}`)?.remove();
 
     } catch (err) {
       alert(`Erreur : ${err.message}`);

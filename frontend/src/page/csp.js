@@ -1,10 +1,13 @@
+import { openModal, reloadConnexion } from "../main";
+import { login } from "./login";
+
 export function loadCSPPage() {
 
   const token = localStorage.getItem("token");
 
   // 🔒 Pas de token → redirect
   if (!token) {
-    window.location.href = "/login";
+    login()
     return;
   }
 
@@ -48,7 +51,7 @@ export function loadCSPPage() {
     // ❌ JWT invalide
     if (res.status === 401) {
       localStorage.removeItem("token");
-      window.location.href = "/login";
+      login()
       return;
     }
 
